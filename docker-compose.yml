@@ -1,0 +1,35 @@
+version: '2'
+
+services:
+  nginx:
+    container_name: beem_nginx
+    image: nginx:latest
+    ports:
+      - 80:80
+    volumes_from:
+      - web
+    volumes:
+      - ./config/nginx:/etc/nginx/conf.d
+      - ./logs:/var/www/logs/laravel
+    depends_on:
+      - web
+
+  web:
+    container_name: beem_web
+    build: .
+    working_dir: /var/www/laravel
+    volumes:
+      - ./src:/var/www/laravel
+    depends_on:
+      - db
+
+  db:
+    container_name: beem_db
+    image: mariadb:latest
+    environment:
+      - "MYSQL_DATABASE=beem_api"
+      - "MYSQL_USER=beem"
+      - "MYSQL_PASSWORD=password"
+      - "MYSQL_ROOT_PASSWORD=password"
+    ports: 
+      - "3306:3306"
