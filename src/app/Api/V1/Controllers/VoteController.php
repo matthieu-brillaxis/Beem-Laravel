@@ -35,7 +35,7 @@ class VoteController extends Controller
         // $vote = Vote::where('user_id','=', intval($user_id))->get();
 
         $vote = Vote::with(['place' => function($query){
-            $query->select(['id','name','ville','adresse','code_postal','horaire_debut','horaire_fin']);
+            $query->select(['id','name','description','ville','adresse','code_postal','horaire_debut','horaire_fin']);
         }])->where('user_id','=',intval($user_id))->orderBy('value', 'desc')->get()->makeHidden(['updated_at','created_at']);
 
         return response()
@@ -71,6 +71,20 @@ class VoteController extends Controller
         ]);
 
         $vote->save();
+
+        return response()
+            ->json(
+                $vote
+            );
+    }
+
+    // Update current vote
+
+    public function updateVote($place_id, $value)
+    {
+        $id = Auth::guard()->user()->id;
+        $vote = Vote::updateOrCreate(['user_id'=>$id, 'place_id'=>$place_id], ['value' => $value]);
+        // $vote = Vote::where([['user_id','=',intval($id)],['place_id','=',intval($place_id)]])->get();
 
         return response()
             ->json(

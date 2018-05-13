@@ -51,6 +51,7 @@ $api->version('v1', function (Router $api) {
             $api->post('/','App\\Api\\V1\\Controllers\\VoteController@postVote');
             $api->get('/user/{id}','App\\Api\\V1\\Controllers\\VoteController@getUserVotes');
             $api->get('/places/{id}','App\\Api\\V1\\Controllers\\VoteController@getPlaceVotes');
+            $api->post('/{id}/{value}','App\\Api\\V1\\Controllers\\VoteController@updateVote');
         });
     });
 

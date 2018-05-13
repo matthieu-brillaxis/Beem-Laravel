@@ -20,7 +20,7 @@ class PlaceController extends Controller
 
     public function getPlaces()
     {
-        $places = Place::all()->makeHidden(['created_at','name','updated_at','description','adresse','ville','code_postal','horaire_debut','horaire_fin'])->toArray();
+        $places = Place::all()->makeHidden(['created_at','updated_at'])->toArray();
 
         return response()
             ->json(
