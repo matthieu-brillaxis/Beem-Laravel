@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Tymon\JWTAuth\JWTAuth;
 use Illuminate\Http\Request;
 use App\Place;
+use App\Vote;
 use Auth;
 
 class PlaceController extends Controller
@@ -20,7 +21,24 @@ class PlaceController extends Controller
 
     public function getPlaces()
     {
+
+        // $places = Place::with(['votes' => function($query){
+        $id = Auth::guard()->user()->id;
+        //     $query->select(['id','place_id','user_id','value']);
+        // }])->get()->makeHidden(['created_at','updated_at']);
+        // $id = Auth::guard()->user()->id;
         $places = Place::all()->makeHidden(['created_at','updated_at'])->toArray();
+        
+        // $votes = Vote::where('user_id', '=', $id)->get()->toArray();
+
+        // foreach ($places as $placeValue) {
+        //     foreach ( $votes as $voteValue ) {
+        //         if($voteValue['place_id'] == $placeValue['id'] && $voteValue['user_id'] == $id ) {
+        //             // print_r($placeValue['id']);
+        //             $placeValue[] = $voteValue;
+        //         }
+        //     }
+        // }
 
         return response()
             ->json(
