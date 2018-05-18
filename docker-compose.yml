@@ -5,7 +5,7 @@ services:
     container_name: beem_nginx
     image: nginx:latest
     ports:
-      - 8084:80
+      - 80:80
     volumes_from:
       - web
     volumes:
